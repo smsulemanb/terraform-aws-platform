@@ -44,7 +44,7 @@ module "ecs" {
 
 module "waf" {
   source = "./modules/waf"
-  alb_arn = module.alb.alb_arn
+  alb_arn = module.alb_arn
 }
 
 module "monitoring" {
