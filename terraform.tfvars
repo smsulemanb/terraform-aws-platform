@@ -1,5 +1,5 @@
 aws_region = "eu-west-2"
-project_name = "platform"
+project_name = "Arenko Platform"
 environment = "prod"
 
 tf_state_bucket = "terraform-platform-state"
@@ -18,7 +18,7 @@ private_subnets = [
   "10.0.11.0/24"
 ]
 
-domain_name = "example.com"
+domain_name = "arenko.com"
 
 db_name = "appdb"
 db_username = "admin"
