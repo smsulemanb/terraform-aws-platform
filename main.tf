@@ -38,10 +38,22 @@ module "alb" {
   public_subnets = module.vpc.public_subnets
 }
 
+module "apigateway" {
+  source = "./modules/apigateway"
+
+  name            = "main-api"
+  vpc_id          = module.vpc.vpc_id
+  private_subnets = module.vpc.private_subnets
+  alb_listener_arn = module.alb.listener_arn
+}
+
 # WAF
 module "waf" {
-  source  = "./modules/waf"
-  alb_arn = module.alb.alb_arn
+  source = "./modules/waf"
+
+  name            = "platform-waf"
+  alb_arn         = module.alb.alb_arn
+  api_gateway_arn = module.apigateway.execution_arn
 }
 
 # ECS
