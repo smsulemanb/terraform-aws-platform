@@ -1,19 +1,22 @@
-resource "random_password" "db" {
-  length  = 16
-  special = true
-}
-
 resource "aws_secretsmanager_secret" "db_secret" {
-  name = "${var.project_name}-db-secret"
+  name        = var.secret_name
+  description = var.description
+
+  recovery_window_in_days = 7
+
+  tags = var.tags
 }
 
-resource "aws_secretsmanager_secret_version" "db_secret_value" {
+# Optional placeholder so Terraform succeeds initially
+resource "aws_secretsmanager_secret_version" "placeholder" {
   secret_id = aws_secretsmanager_secret.db_secret.id
-  secret_string = jsonencode({
-    password = random_password.db.result
-  })
-}
 
-output "db_secret_arn" {
-  value = aws_secretsmanager_secret.db_secret.arn
+  secret_string = jsonencode({
+    username = "placeholder"
+    password = "placeholder"
+  })
+
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
 }

@@ -1,26 +1,21 @@
 variable "aws_region" {}
-variable "project_name" {}
 variable "environment" {}
-
-variable "tf_state_bucket" {}
-variable "tf_state_key" {}
-variable "tf_state_lock_table" {}
+variable "cluster_name" {}
+variable "service" {}
 
 variable "vpc_cidr" {}
+variable "availability_zones" { type = list(string) }
 
-variable "public_subnets" {
-  type = list(string)
-}
-
-variable "private_subnets" {
-  type = list(string)
-}
-
-variable "domain_name" {}
+variable "public_subnets" { type = list(string) }
+variable "private_subnets" { type = list(string) }
+variable "db_subnets" { type = list(string) }
 
 variable "db_name" {}
 variable "db_username" {}
+variable "db_password" {}
 
-variable "ecs_desired_count" {}
-variable "ecs_min_capacity" {}
-variable "ecs_max_capacity" {}
+# ECS autoscaling variables
+variable "ecs_desired_count" { default = 2 }
+variable "ecs_min_count" { default = 2 }
+variable "ecs_max_count" { default = 5 }
+variable "ecs_cpu_target" { default = 70 }
